@@ -27,6 +27,7 @@ public class Handler {
     private Bitmap level = null, level2 = null, level3 = null, level_1 = null;
     private int x=896,y=768;
     private boolean dir;
+    private boolean playerDirection = true;;
     Equipment eq = GameView.getInstanceEq();
 
     //konstruktor
@@ -94,7 +95,7 @@ public class Handler {
             }
         }
         //dodanie gracza na wierzchniej warstwie, aby nie był przykryty przez inne obiekty
-        addObject(new Player(x,y,this,ObjectId.Player, true));
+        addObject(new Player(x,y,this,ObjectId.Player, playerDirection));
     }
 
 
@@ -128,11 +129,13 @@ public class Handler {
         {
             GameView.LEVEL++;
             x=146;
+            playerDirection = true;
         }
         else
         {
             GameView.LEVEL--;
             x=1646;
+            playerDirection = false;
         }
         switchLevel();
 
