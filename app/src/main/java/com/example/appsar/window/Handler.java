@@ -3,6 +3,7 @@ package com.example.appsar.window;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.example.appsar.R;
@@ -59,6 +60,14 @@ public class Handler {
         for (int i=0;i<object.size();i++)
         {
             tempObject = object.get(i);
+
+            //rysowanie pajęczyny
+            if (tempObject.getId() == ObjectId.Spider)
+            {
+                Spider spider = (Spider)tempObject;
+                paint.setColor(Color.rgb(237,237,237));
+                canvas.drawRect(tempObject.getX()+60,spider.getStartingPoint(),tempObject.getX()+68,tempObject.getY(),paint);
+            }
             tempObject.render(context, canvas, paint);
         }
     }
