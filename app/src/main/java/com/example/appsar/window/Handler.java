@@ -15,6 +15,7 @@ import com.example.appsar.objects.Collectible;
 import com.example.appsar.objects.Equipment;
 import com.example.appsar.objects.Flag;
 import com.example.appsar.objects.Player;
+import com.example.appsar.objects.Snail;
 import com.example.appsar.objects.Spider;
 
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class Handler {
 
     public LinkedList<GameObject> object = new LinkedList<GameObject>();
     private GameObject tempObject;
-    private Bitmap level = null, level2 = null, level3 = null, level_1 = null;
+    private Bitmap level = null, level2 = null, level3 = null, level_1 = null, level_2 = null;
     private int x=896,y=768;
     private boolean dir;
     private boolean playerDirection = true;;
@@ -38,6 +39,7 @@ public class Handler {
         level2 = loader.loadImage(context, R.drawable.level2);
         level3= loader.loadImage(context, R.drawable.level3);
         level_1 = loader.loadImage(context, R.drawable.level_1);
+        level_2 = loader.loadImage(context, R.drawable.level_2);
         LoadImageLevel(level);
         Player.HEALTH=100;
         Player.LIVES=2;
@@ -93,6 +95,7 @@ public class Handler {
                 if (red == 255 && green==0 && blue == 0) addObject(new Flag(xx*GameView.objectSize,yy*GameView.objectSize,false,ObjectId.Flag));
                 if (red == 0 && green==255 && blue == 0) addObject(new Flag(xx*GameView.objectSize,yy*GameView.objectSize,true,ObjectId.Flag));
                 if (red == 255 && green==0 && blue == 255) addObject(new Spider(xx*GameView.objectSize,yy*GameView.objectSize,ObjectId.Spider));
+                if (red == 255 && green==150 && blue == 0) addObject(new Snail(xx*GameView.objectSize,yy*GameView.objectSize, false, ObjectId.Snail));
                 if (red == 0 && green==127 && blue == 0) addObject(new Cauldron(xx*GameView.objectSize,yy*GameView.objectSize,ObjectId.Cauldron));
                 if (red == 0 && green==0 && blue == 255 && !eq.isGum()) addObject(new Collectible(xx*GameView.objectSize,yy*GameView.objectSize,ObjectId.Collectible,0));
                 if (red == 127 && green==0 && blue == 0 && !eq.isFlashlight()) addObject(new Collectible(xx*GameView.objectSize,yy*GameView.objectSize,ObjectId.Collectible,1));
@@ -114,6 +117,9 @@ public class Handler {
 
         switch (GameView.LEVEL)
         {
+            case -2:
+                LoadImageLevel(level_2);
+                break;
             case -1:
                 LoadImageLevel(level_1);
                 break;

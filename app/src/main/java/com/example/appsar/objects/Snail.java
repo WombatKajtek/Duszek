@@ -14,37 +14,53 @@ import com.example.appsar.window.GameView;
 import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Spider extends GameObject {
+public class Snail extends GameObject {
     Texture tex = GameView.getInstance();
     private float startingPoint;
-    private Animation spiderMove;
-
+    private Animation snailMoveR, snailMoveL;
 
     //konstruktor
-    public Spider(float x, float y,  ObjectId id) {
+    public Snail(float x, float y, boolean direction, ObjectId id) {
         super(x, y, id);
-        startingPoint = y;
-        this.y = ThreadLocalRandom.current().nextInt((int)startingPoint, (int)startingPoint+101);
-        spiderMove = new Animation(10, tex.spider[0], tex.spider[1], tex.spider[2]);
+        this.direction = direction;
+        startingPoint = x;
+
+        snailMoveR = new Animation(10, tex.snail[0], tex.snail[1], tex.snail[2]);
+        snailMoveL = new Animation(10, tex.snail[3], tex.snail[4], tex.snail[5]);
     }
 
 
     //metoda aktualizująca położenie pająków oraz uzyskująca kolejną klatkę animacji
     public void tick(LinkedList<GameObject> object) {
-        spiderMove.runAnimation();
-        if (y >= startingPoint+100)
-            direction = false;
-        if (y <= startingPoint)
-            direction = true;
+        snailMoveR.runAnimation();
+        snailMoveL.runAnimation();
+
+        if (startingPoint > GameView.screenWidth/2) {
+            if (x >= startingPoint)
+                direction = false;
+            if (x <= startingPoint - 1024)
+                direction = true;
+        }
+        else
+        {
+            if (x >= startingPoint + 1024)
+                direction = false;
+            if (x <= startingPoint)
+                direction = true;
+        }
+
         if (direction)
-            velY=2;
-        else velY=-2;
-        y+= velY;
+            velX=2;
+        else velX=-2;
+        x+= velX;
+
+
     }
 
     //metoda rysująca klatki animacji
     public void render(Context context, Canvas canvas, Paint paint) {
-        spiderMove.drawAnimation(canvas, (int)x, (int)y, paint);
+        if (direction)snailMoveR.drawAnimation(canvas, (int)x, (int)y, paint);
+        else snailMoveL.drawAnimation(canvas, (int)x, (int)y, paint);
     }
 
     //pobranie granic obiektu używane do wykrywania kolizji

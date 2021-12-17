@@ -9,6 +9,7 @@ public enum ObjectId {
     Flag(),
     Spider(),
     Collectible(),
-    Cauldron()
+    Cauldron(),
+    Snail()
 
 }

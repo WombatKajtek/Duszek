@@ -9,16 +9,18 @@ import com.example.appsar.window.BufferedImageLoader;
 //klasa przechowująca wszystkie tekstury obiektów, które rysujemy na ekranie za pomoca handlera
 public class Texture {
 
-    SpriteSheet bs, ps, ss, cs, cas;
+    SpriteSheet bs, ps, ss, cs, cas, sns;
     private Bitmap block_sheet = null;
     private Bitmap player_sheet = null;
     private Bitmap spider_sheet = null;
+    private Bitmap snail_sheet = null;
     private Bitmap collectibles_sheet = null;
     private Bitmap cauldron_sheet = null;
 
     public Bitmap[] block = new Bitmap[2];
     public Bitmap[] player = new Bitmap[8];
     public Bitmap[] spider = new Bitmap[3];
+    public Bitmap[] snail = new Bitmap[6];
     public Bitmap[] playerDeath = new Bitmap[2];
     public Bitmap[] playerHit = new Bitmap[2];
     public Bitmap[] collectible = new Bitmap[3];
@@ -33,6 +35,7 @@ public class Texture {
         block_sheet = loader.loadImage(context, R.drawable.block_sheet, 128*2,128);
         player_sheet = loader.loadImage(context, R.drawable.player_sheet, 128*8,128*2);
         spider_sheet = loader.loadImage(context, R.drawable.spider_sheet, 128*3,128);
+        snail_sheet = loader.loadImage(context, R.drawable.snail_sheet, 128*6,128);
         collectibles_sheet = loader.loadImage(context, R.drawable.collectibles_sheet, 128*3,128);
         cauldron_sheet = loader.loadImage(context, R.drawable.cauldron_sheet, 128*2,128);
 
@@ -41,6 +44,7 @@ public class Texture {
         bs = new SpriteSheet(block_sheet);
         ps = new SpriteSheet(player_sheet);
         ss = new SpriteSheet(spider_sheet);
+        sns = new SpriteSheet(snail_sheet);
         cs = new SpriteSheet(collectibles_sheet);
         cas = new SpriteSheet(cauldron_sheet);
 
@@ -66,6 +70,14 @@ public class Texture {
         spider[0] = ss.grabImage(1,1,128,128);
         spider[1] = ss.grabImage(2,1,128,128);
         spider[2] = ss.grabImage(3,1,128,128);
+
+        snail[0] = sns.grabImage(1,1,128,128);
+        snail[1] = sns.grabImage(2,1,128,128);
+        snail[2] = sns.grabImage(3,1,128,128);
+
+        snail[3] = sns.grabImage(4,1,128,128);
+        snail[4] = sns.grabImage(5,1,128,128);
+        snail[5] = sns.grabImage(6,1,128,128);
 
         playerDeath[0] = ps.grabImage(1,2,128,128);
         playerDeath[1] = ps.grabImage(2,2,128,128);

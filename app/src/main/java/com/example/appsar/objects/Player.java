@@ -129,6 +129,14 @@ public class Player extends GameObject {
                 }
             }
 
+            else if (tempObject.getId() == ObjectId.Snail){
+                if (getBounds().intersect(tempObject.getBounds())) {
+                    hit=true;
+                    if (HEALTH >0)
+                        HEALTH--;
+                }
+            }
+
             //kolizje ze zbieralnymi przedmiotami, pozwala zbierać te przedmioty do ekwipunku.
             //jeśli wejdziemy w kolizję z tym przedmiotem to zostanie on usunięty z listy obiektów
             //a zostanie dodany do ekwipunku i narysowany na interfejsie
