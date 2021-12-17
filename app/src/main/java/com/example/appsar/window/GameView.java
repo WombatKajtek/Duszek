@@ -68,7 +68,6 @@ public class GameView extends SurfaceView implements Runnable {
         return equipment;
     }
 
-
     //główna pętla gry, w tej metodzie zachodzą wszystkie aktualizacje
     @Override
     public void run() {
