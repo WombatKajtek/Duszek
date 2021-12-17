@@ -25,7 +25,6 @@ public class GameView extends SurfaceView implements Runnable {
     private boolean inGame;
 
 
-    public static float screenRatioX, screenRatioY;
     public static int screenWidth, screenHeight;
     public static int objectSize;
     private Paint paint;
