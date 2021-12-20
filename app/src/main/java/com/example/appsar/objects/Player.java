@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.SoundPool;
 
 import com.example.appsar.framework.GameObject;
 import com.example.appsar.framework.ObjectId;
+import com.example.appsar.framework.Sound;
 import com.example.appsar.framework.Texture;
 import com.example.appsar.window.Animation;
 import com.example.appsar.window.GameView;
@@ -23,12 +25,16 @@ public class Player extends GameObject {
     public static int HEALTH = 100;
     public static int LIVES = 2;
     private boolean hit = false;
+    private boolean soundPlaying = false;
+    private int streamId;
 
 
 
 
     Texture tex = GameView.getInstance();
     Equipment eq = GameView.getInstanceEq();
+    //SoundPool sp = GameView.getInstanceSp();
+    Sound sound = GameView.getInstanceS();
 
     private Animation playerWalk;
     private Animation playerWalkBackwards;
@@ -64,7 +70,16 @@ public class Player extends GameObject {
         playerWalkBackwards.runAnimation();
 
 
-
+        if (!soundPlaying) {
+            if (hit) {
+                soundPlaying = true;
+                streamId = sound.playSound(sound.soundGettingHit, -1);
+            }
+        }
+            if (!hit) {
+                soundPlaying = false;
+                sound.stopSound(streamId);
+            }
 
     }
 
@@ -116,26 +131,22 @@ public class Player extends GameObject {
                     y=500;
                     handler.setDir(tempObject.getDirection());
                     handler.drawLevel();
+                    sound.playSound(sound.soundChangingLevel,0);
                 }
             }
 
-            //kolizje z pająkiem kończy się utratą zdrowia i odtworzeniem animacji otrzymania
+            //kolizje z przeciwnikami kończą się utratą zdrowia i odtworzeniem animacji otrzymania
             // obrażeń
-            else if (tempObject.getId() == ObjectId.Spider){
+            else if (tempObject.getId() == ObjectId.Spider || tempObject.getId() == ObjectId.Snail){
                 if (getBounds().intersect(tempObject.getBounds())) {
                     hit=true;
                     if (HEALTH >0)
                  HEALTH--;
+
                 }
             }
 
-            else if (tempObject.getId() == ObjectId.Snail){
-                if (getBounds().intersect(tempObject.getBounds())) {
-                    hit=true;
-                    if (HEALTH >0)
-                        HEALTH--;
-                }
-            }
+
 
             //kolizje ze zbieralnymi przedmiotami, pozwala zbierać te przedmioty do ekwipunku.
             //jeśli wejdziemy w kolizję z tym przedmiotem to zostanie on usunięty z listy obiektów
@@ -146,7 +157,9 @@ public class Player extends GameObject {
                 handler.removeObject(tempObject);
                 if (col.getType()>=0)
                     eq.setSlot(col.getType());
+                    sound.playSound(sound.soundCollectingItem,0);
                 }
+
             }
 
             //kolizje z kotłem, jeśli zebraliśmy wszystkie przedmioty, to możemy je do niego włożyć

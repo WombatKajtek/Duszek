@@ -37,6 +37,10 @@ public class Block extends GameObject {
             canvas.drawBitmap(tex.block[0], x, y, paint);
         if (type == 1)
             canvas.drawBitmap(tex.block[1], x, y, paint);
+        if (type == 2)
+            canvas.drawBitmap(tex.block[2], x, y, paint);
+        if (type == 3)
+            canvas.drawBitmap(tex.block[3], x, y, paint);
     }
 
     //pobranie granic obiektu używane do wykrywania kolizji

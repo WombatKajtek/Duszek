@@ -19,6 +19,7 @@ import com.example.appsar.objects.Snail;
 import com.example.appsar.objects.Spider;
 
 import java.util.LinkedList;
+import java.util.logging.Level;
 
 //klasa pozwalająca operować na wszystkich obiektach na raz, tworzymy liste obiektów i aktualizujemy
 //je wszystkie w jednym miejscu
@@ -27,6 +28,7 @@ public class Handler {
     public LinkedList<GameObject> object = new LinkedList<GameObject>();
     private GameObject tempObject;
     private Bitmap level = null, level2 = null, level3 = null, level_1 = null, level_2 = null;
+    private Bitmap backgroundCastle, backgroundForest;
     private int x=896,y=768;
     private boolean dir;
     private boolean playerDirection = true;;
@@ -40,6 +42,9 @@ public class Handler {
         level3= loader.loadImage(context, R.drawable.level3);
         level_1 = loader.loadImage(context, R.drawable.level_1);
         level_2 = loader.loadImage(context, R.drawable.level_2);
+        backgroundCastle = loader.loadImage(context, R.drawable.backgroundcastle);
+        backgroundForest = loader.loadImage(context, R.drawable.backgroundforest);
+
         LoadImageLevel(level);
         Player.HEALTH=100;
         Player.LIVES=2;
@@ -59,6 +64,11 @@ public class Handler {
     //rysowanie obiektów na ekranie
     public void render(Context context, Canvas canvas, Paint paint)
     {
+        if (GameView.LEVEL < 0)
+            canvas.drawBitmap(backgroundForest,0,0,paint);
+        else
+            canvas.drawBitmap(backgroundCastle,0,0,paint);
+
         for (int i=0;i<object.size();i++)
         {
             tempObject = object.get(i);
@@ -90,8 +100,10 @@ public class Handler {
                 int blue = (pixel) & 0xff;
 
 
-                if (red == 255 && green==255 && blue == 255) addObject(new Block(xx*GameView.objectSize,yy*GameView.objectSize,0,ObjectId.Block));
-                if (red == 127 && green==127 && blue == 127) addObject(new Block(xx*GameView.objectSize,yy*GameView.objectSize,1,ObjectId.Block));
+                if (red == 255 && green==255 && blue == 255 && GameView.LEVEL < 0) addObject(new Block(xx*GameView.objectSize,yy*GameView.objectSize,2,ObjectId.Block));
+                if (red == 127 && green==127 && blue == 127 && GameView.LEVEL < 0) addObject(new Block(xx*GameView.objectSize,yy*GameView.objectSize,3,ObjectId.Block));
+                if (red == 255 && green==255 && blue == 255 && GameView.LEVEL >= 0) addObject(new Block(xx*GameView.objectSize,yy*GameView.objectSize,0,ObjectId.Block));
+                if (red == 127 && green==127 && blue == 127&& GameView.LEVEL >= 0) addObject(new Block(xx*GameView.objectSize,yy*GameView.objectSize,1,ObjectId.Block));
                 if (red == 255 && green==0 && blue == 0) addObject(new Flag(xx*GameView.objectSize,yy*GameView.objectSize,false,ObjectId.Flag));
                 if (red == 0 && green==255 && blue == 0) addObject(new Flag(xx*GameView.objectSize,yy*GameView.objectSize,true,ObjectId.Flag));
                 if (red == 255 && green==0 && blue == 255) addObject(new Spider(xx*GameView.objectSize,yy*GameView.objectSize,ObjectId.Spider));

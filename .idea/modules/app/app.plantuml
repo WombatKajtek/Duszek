@@ -1,0 +1,207 @@
+@startuml
+
+title __APPSAR.APP's Class Diagram__\n
+
+  namespace com.example.appsar {
+    class com.example.appsar.BuildConfig {
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    class com.example.appsar.ExampleInstrumentedTest {
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace framework {
+      abstract class com.example.appsar.framework.GameObject {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace framework {
+      enum ObjectId {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace framework {
+      class com.example.appsar.framework.SpriteSheet {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace framework {
+      class com.example.appsar.framework.Texture {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Block {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Cauldron {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Collectible {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Equipment {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Flag {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Player {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Snail {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace objects {
+      class com.example.appsar.objects.Spider {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace window {
+      class com.example.appsar.window.Animation {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace window {
+      class com.example.appsar.window.BufferedImageLoader {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace window {
+      class com.example.appsar.window.GameActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace window {
+      class com.example.appsar.window.GameView {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace window {
+      class com.example.appsar.window.Handler {
+      }
+    }
+  }
+  
+
+  namespace com.example.appsar {
+    namespace window {
+      class com.example.appsar.window.MainActivity {
+      }
+    }
+  }
+  
+
+  com.example.appsar.framework.GameObject o-- com.example.appsar.framework.ObjectId : id
+  com.example.appsar.framework.Texture o-- com.example.appsar.framework.SpriteSheet : bs
+  com.example.appsar.framework.Texture o-- com.example.appsar.framework.SpriteSheet : cas
+  com.example.appsar.framework.Texture o-- com.example.appsar.framework.SpriteSheet : cs
+  com.example.appsar.framework.Texture o-- com.example.appsar.framework.SpriteSheet : ps
+  com.example.appsar.framework.Texture o-- com.example.appsar.framework.SpriteSheet : sns
+  com.example.appsar.framework.Texture o-- com.example.appsar.framework.SpriteSheet : ss
+  com.example.appsar.objects.Block -up-|> com.example.appsar.framework.GameObject
+  com.example.appsar.objects.Block o-- com.example.appsar.framework.Texture : tex
+  com.example.appsar.objects.Cauldron -up-|> com.example.appsar.framework.GameObject
+  com.example.appsar.objects.Cauldron o-- com.example.appsar.framework.Texture : tex
+  com.example.appsar.objects.Cauldron o-- com.example.appsar.window.Animation : cauldronMove
+  com.example.appsar.objects.Collectible -up-|> com.example.appsar.framework.GameObject
+  com.example.appsar.objects.Collectible o-- com.example.appsar.framework.Texture : tex
+  com.example.appsar.objects.Flag -up-|> com.example.appsar.framework.GameObject
+  com.example.appsar.objects.Player -up-|> com.example.appsar.framework.GameObject
+  com.example.appsar.objects.Player o-- com.example.appsar.objects.Equipment : eq
+  com.example.appsar.objects.Player o-- com.example.appsar.framework.Texture : tex
+  com.example.appsar.objects.Player o-- com.example.appsar.window.Handler : handler
+  com.example.appsar.objects.Player o-- com.example.appsar.window.Animation : playerWalk
+  com.example.appsar.objects.Player o-- com.example.appsar.window.Animation : playerWalkBackwards
+  com.example.appsar.objects.Snail -up-|> com.example.appsar.framework.GameObject
+  com.example.appsar.objects.Snail o-- com.example.appsar.framework.Texture : tex
+  com.example.appsar.objects.Snail o-- com.example.appsar.window.Animation : snailMoveL
+  com.example.appsar.objects.Snail o-- com.example.appsar.window.Animation : snailMoveR
+  com.example.appsar.objects.Spider -up-|> com.example.appsar.framework.GameObject
+  com.example.appsar.objects.Spider o-- com.example.appsar.framework.Texture : tex
+  com.example.appsar.objects.Spider o-- com.example.appsar.window.Animation : spiderMove
+  com.example.appsar.window.GameActivity -up-|> android.app.Activity
+  com.example.appsar.window.GameActivity o-- com.example.appsar.window.GameView : gameView
+  com.example.appsar.window.GameView .up.|> java.lang.Runnable
+  com.example.appsar.window.GameView -up-|> android.view.SurfaceView
+  com.example.appsar.window.GameView o-- com.example.appsar.window.GameActivity : gameActivity
+  com.example.appsar.window.GameView o-- com.example.appsar.window.Handler : handler
+  com.example.appsar.window.Handler o-- com.example.appsar.objects.Equipment : eq
+  com.example.appsar.window.Handler o-- com.example.appsar.framework.GameObject : tempObject
+  com.example.appsar.window.MainActivity -up-|> android.app.Activity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

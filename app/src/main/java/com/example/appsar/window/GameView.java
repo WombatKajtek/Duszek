@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import com.example.appsar.R;
 import com.example.appsar.framework.GameObject;
 import com.example.appsar.framework.ObjectId;
+import com.example.appsar.framework.Sound;
 import com.example.appsar.framework.Texture;
 import com.example.appsar.objects.Equipment;
 import com.example.appsar.objects.Player;
@@ -23,26 +24,30 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private GameActivity gameActivity;
     private boolean inGame;
-
-
     public static int screenWidth, screenHeight;
     public static int objectSize;
     private Paint paint;
-    private Bitmap  tlo=null;
+    private Bitmap background =null;
+    //private static SoundPool soundPool;
+    //private static int sound;
     public static int LEVEL=0;
     public static boolean gameWon;
     private Handler handler;
+    static Sound sound;
     static Texture tex;
     static Equipment equipment;
+    private boolean soundPlaying=false;
 
     //metoda inicjalizująca
     private void init(){
         equipment = new Equipment();
         tex = new Texture(getContext());
+        sound = new Sound(getContext());
         handler = new Handler(getContext());
+
         gameWon=false;
         BufferedImageLoader loader = new BufferedImageLoader();
-        tlo = loader.loadImage(getContext(), R.drawable.tlo);
+        background = loader.loadImage(getContext(), R.drawable.backgroundcastle);
     }
 
     //konstruktor
@@ -50,6 +55,24 @@ public class GameView extends SurfaceView implements Runnable {
         super(context);
         this.gameActivity = gameActivity;
         this.getHolder().setFixedSize(1920,1080);
+
+    /*
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .build();
+            soundPool = new SoundPool.Builder()
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else
+            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+
+
+     */
+        //sound = soundPool.load(this.getContext(), R.raw.cloth4, 1);
+
+
 
         screenWidth = screenX;
         screenHeight = screenY;
@@ -65,6 +88,17 @@ public class GameView extends SurfaceView implements Runnable {
     //metoda zwracajca instancję klasy Equipment
     public static Equipment getInstanceEq(){
         return equipment;
+    }
+
+    /*
+    //metoda zwracająca instancję klasy SounPool
+    public static SoundPool getInstanceSp(){
+        return soundPool;
+    }
+
+     */
+    public static Sound getInstanceS(){
+        return sound;
     }
 
     //główna pętla gry, w tej metodzie zachodzą wszystkie aktualizacje
@@ -102,6 +136,16 @@ public class GameView extends SurfaceView implements Runnable {
     //metoda aktualizująca pozycje obietków
     private void update() {
         handler.tick();
+        if (!soundPlaying) {
+        if (Player.HEALTH <= 0 ) {
+                soundPlaying=true;
+                sound.playSound(sound.soundDying, 0);
+            }
+            if (gameWon){
+                soundPlaying=true;
+                sound.playSound(sound.soundWinning, 0);
+            }
+        }
     }
 
     //metoda rysująca obiekty na ekranie
@@ -111,7 +155,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             //wypisanie odpowiedniej wiadomości w zależności od stanu gry
             Canvas canvas = getHolder().lockCanvas();
-            canvas.drawBitmap(tlo,0,0,paint);
+            canvas.drawBitmap(background,0,0,paint);
             handler.render(getContext(), canvas, paint);
 
             //przegrana
@@ -217,6 +261,7 @@ public class GameView extends SurfaceView implements Runnable {
                         //początek skoku
                          else if (event.getX() > GameView.screenWidth/2 && !tempObject.isJumping()){
                             tempObject.setVelY(-14);
+                            sound.playSound(sound.soundJumping,0);
                         }
 
                         break;
@@ -246,10 +291,12 @@ public class GameView extends SurfaceView implements Runnable {
                             handler.clearLevel();
                             handler.switchLevel();
                             Player.LIVES--;
+                            soundPlaying=false;
                         }
                         if (Player.LIVES <0 || gameWon){
-                        thread.interrupt();
-                        gameActivity.finish();
+                            soundPlaying=false;
+                            thread.interrupt();
+                            gameActivity.finish();
                         }
 
 

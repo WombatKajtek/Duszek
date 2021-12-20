@@ -9,7 +9,7 @@ import com.example.appsar.window.BufferedImageLoader;
 //klasa przechowująca wszystkie tekstury obiektów, które rysujemy na ekranie za pomoca handlera
 public class Texture {
 
-    SpriteSheet bs, ps, ss, cs, cas, sns;
+    private SpriteSheet bs, ps, ss, cs, cas, sns;
     private Bitmap block_sheet = null;
     private Bitmap player_sheet = null;
     private Bitmap spider_sheet = null;
@@ -17,7 +17,7 @@ public class Texture {
     private Bitmap collectibles_sheet = null;
     private Bitmap cauldron_sheet = null;
 
-    public Bitmap[] block = new Bitmap[2];
+    public Bitmap[] block = new Bitmap[4];
     public Bitmap[] player = new Bitmap[8];
     public Bitmap[] spider = new Bitmap[3];
     public Bitmap[] snail = new Bitmap[6];
@@ -32,7 +32,7 @@ public class Texture {
 
         //wczytujemy akrusze obrazów (sprite sheety) z plików i skalujemy je w górę
         BufferedImageLoader loader = new BufferedImageLoader();
-        block_sheet = loader.loadImage(context, R.drawable.block_sheet, 128*2,128);
+        block_sheet = loader.loadImage(context, R.drawable.block_sheet, 128*4,128);
         player_sheet = loader.loadImage(context, R.drawable.player_sheet, 128*8,128*2);
         spider_sheet = loader.loadImage(context, R.drawable.spider_sheet, 128*3,128);
         snail_sheet = loader.loadImage(context, R.drawable.snail_sheet, 128*6,128);
@@ -56,6 +56,8 @@ public class Texture {
     private void getTextures(){
         block[0]=bs.grabImage(1,1,128,128);
         block[1]=bs.grabImage(2,1,128,128);
+        block[2]=bs.grabImage(3,1,128,128);
+        block[3]=bs.grabImage(4,1,128,128);
 
         player[0] = ps.grabImage(1,1,128,128);
         player[1] = ps.grabImage(2,1,128,128);
