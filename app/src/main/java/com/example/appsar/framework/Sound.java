@@ -17,7 +17,6 @@ public class Sound {
     public int soundChangingLevel;
     public int soundJumping;
     public int soundDying;
-    public int soundBackgroundMusic;
     private Context context;
     private SoundPool soundPool;
 

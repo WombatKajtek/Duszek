@@ -33,7 +33,6 @@ public class Player extends GameObject {
 
     Texture tex = GameView.getInstance();
     Equipment eq = GameView.getInstanceEq();
-    //SoundPool sp = GameView.getInstanceSp();
     Sound sound = GameView.getInstanceS();
 
     private Animation playerWalk;
@@ -65,7 +64,6 @@ public class Player extends GameObject {
                 velY = MAX_SPEED;
         }
         Collision(object);
-
         playerWalk.runAnimation();
         playerWalkBackwards.runAnimation();
 
